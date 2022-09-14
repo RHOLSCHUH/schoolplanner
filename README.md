@@ -1,2 +1,2 @@
 # schoolplanner
-school planner app
+Work in progress
