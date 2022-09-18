@@ -1,3 +1,3 @@
 # schoolplanner
-Work in progress
+Work in progress | 
 main program code: main.py
