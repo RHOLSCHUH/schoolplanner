@@ -9,14 +9,14 @@ from ttkthemes import ThemedTk
 import sqlite3
 import smtplib
 
-connection = sqlite3.connect("database.db")
+connection = sqlite3.connect("database.db") #database connection
 
 connection.execute('''CREATE TABLE IF NOT EXISTS ASSIGNMENTS
                     (DESC TEXT,
                     TYPE TEXT,
                     CLASS TEXT,
                    DATE TEXT);''')
-#print("Table created")
+#If database does not exist, create table.
 
 main = ThemedTk(theme="black")
 main.title('Student Life Planner v0.1')
@@ -41,7 +41,7 @@ tabControl.add(tab4, text='Mail')
 tabControl.add(tab5, text='Settings', image=imgSettings)
 tabControl.pack(expand=5, fill="both")
 
-# ---------------- Database Contents ------------------------------------
+# ---------------- Database Contents (WIP) ------------------------------------
 #def database():
 
 
@@ -148,22 +148,27 @@ header2.grid(row=0, column=0)
 # -----------------------------------------------------------
 
 classList = Listbox(tab2, width=30, height=15, relief='solid', borderwidth=3)
-classList.grid(row=4, column=0,columnspan=3, sticky='w')
+classList.grid(row=4, column=0,columnspan=4, sticky='w')
 
+class_desc = Label(tab2, text='Class', font=("TkMenuFont", 12, 'bold'))
+class_desc.grid(row=2, column=5)
+
+class_name = Entry(tab2, width=30)
+class_name.grid(row=2, column=6)
 
 
 # ----------------- TAB 3 CONTENTS -------------------------------
 cal = Calendar(tab3, selectmode='none', year=2022, month=5, day=25)
 cal.grid(row=0, column=0)
 
-# ----------------- EMAIL TAB CONTENTS -------------------------------
+# ----------------- EMAIL TAB CONTENTS -------------------------------(Might remove/experimental)
 
 def send_message():
     address_info = address.get()
     email_body_info = email_body.get()
     print(address_info,email_body_info)
-    sender_email = "rileyholschuh@gmail.com"
-    sender_password = "pebbleS05"
+    sender_email = ""
+    sender_password = ""
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(sender_email, sender_password)
@@ -199,7 +204,20 @@ def openOutlook():
 emailButtonO = Button(tab4, text="Outlook", width="30", height="2", bg="grey", command=lambda :openOutlook())
 emailButtonO.grid(row=6, column=0)
 
+# ----------------- SETTINGS CONTENT -------------------------------
+
+themeText = Label(tab5, text='Theme(light/dark)', font=("TkMenuFont", 12, 'bold underline'))
+themeText.grid(row=0, column=0)
+
+def Simpletoggle():
+    if toggle_button.config('text')[-1] == 'DARK':
+        toggle_button.config(text='LIGHT')
+    else:
+        toggle_button.config(text='DARK')
 
 
+toggle_button = Button(tab5, text="DARK",  command=Simpletoggle)
+toggle_button.grid(row=1, column=0)
 
 main.mainloop()
+
